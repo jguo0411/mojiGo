@@ -1,0 +1,2 @@
+# mojiGo
+learn go
