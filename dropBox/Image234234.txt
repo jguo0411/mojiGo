@@ -1,0 +1,16 @@
+# parameters example
+
+
+img_path =\\192.168.0.102\AITestNgData\hiragana\0922300H\Image894.png
+
+text_threshold =  0.6
+low_text =   0.5
+link_threshold =  0.35
+
+add_link = 0
+connectivity =   4
+
+low_area_threshold =   10
+high_area_threshold =  10000
+high_width_threshold =  1000
+high_height_threshold =  1000

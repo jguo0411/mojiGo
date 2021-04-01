@@ -1,0 +1,14 @@
+# parameters example
+img_path =                     \\192.168.0.90\AITestNgData\DacTrinityNgData\0922300K\0922300K.png
+text_threshold =                0.55
+low_text =                      0.4
+link_threshold =                0.35
+
+add_link =                      1
+connectivity =                  4
+low_area_threshold =            10
+high_area_threshold =           10000
+
+high_width_threshold =          10000
+high_height_threshold =         10000
+
