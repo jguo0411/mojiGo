@@ -1,23 +1,29 @@
 package main
 
 import (
-	"flag"
-	"os"
+	"fmt"
+	"mojiGo/utils/sys"
 )
 
-var (
-	cfgPath string
-)
+// detect loop shared folder, looking for .txt file.
+func detect() error {
+	//source :=
 
-func Exist(filename string) bool {
-	_, err := os.Stat(filename)
-	return err == nil || os.IsExist(err)
+	return nil
 }
 
+
 func main() {
-	//var errFile []string
-	flag.StringVar(&cfgPath, "p", "cfg/config.ini", "System Config file path.")
-	flag.Parse()
+	//cfgMap := file.ReadConfig(cfgPa)
+	fmt.Println("=====main")
+	for k, v := range sys.CfgMap["clients"]{
+		fmt.Printf("%s:%s\n", k, v)
+	}
+	fmt.Println(sys.Test)
+
+
+	//mount clients
+	return
 
 	// TODO log
 }
