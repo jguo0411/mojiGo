@@ -1,7 +1,6 @@
 # parameters example
-
-
-img_path =\\192.168.0.102\AITestNgData\hiragana\0922300H\Image894.png
+[parameters]
+img_path =\\192.168.0.5\Customer\AITestFolder\DacTrinityBackUp\21.bmp
 
 text_threshold =  0.6
 low_text =   0.5
