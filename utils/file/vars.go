@@ -48,7 +48,7 @@ func NewError(code int, msg string) *Err {
 }
 
 type Hyp struct {
-	CutSize, Pad uint64
+	CutSize, Pad int
 
 	TxtFilePath   string
 	ImgPath       string
@@ -70,7 +70,7 @@ type Hyp struct {
 }
 
 func (h *Hyp) Init() {
-	h.CutSize, h.Pad = 768, 30
+	h.CutSize, h.Pad = 768, 0
 	h.TxtFilePath = ""
 
 	h.ImgPath = ""

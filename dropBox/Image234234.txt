@@ -1,6 +1,6 @@
 # parameters example
 [parameters]
-img_path =\\192.168.0.5\Customer\AITestFolder\DacTrinityBackUp\21.bmp
+img_path =\\192.168.0.5\Customer\AITestFolder\DacTrinityBackUp\flatmaster_0.bmp
 
 text_threshold =  0.6
 low_text =   0.5
