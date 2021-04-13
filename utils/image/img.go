@@ -10,6 +10,8 @@ func GoSum(a, b int) C.int {
 	return s
 }
 
+
+
 //func toCPoints(points []image.Point) C.struct_Points {
 //	cPointSlice := make([]C.struct_Point, len(points))
 //	for i, point := range points {

@@ -9,6 +9,13 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="16fc8a9d-fe10-43cf-a2c4-3f01b9af12d3" name="dac-nx-test">
+        <fileTransfer accessType="SFTP" host="192.168.0.192" port="22" sshConfigId="454dbf28-bf70-48eb-b687-0274b8552cf4" sshConfig="dac-nx@192.168.0.192:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
