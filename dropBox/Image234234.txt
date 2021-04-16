@@ -1,9 +1,8 @@
 # parameters example
 [parameters]
 img_path =\\192.168.0.5\Customer\AITestFolder\DacTrinityBackUp\flatmaster_0.bmp
-
-text_threshold =  0.6
-low_text =   0.5
+text_threshold =  0.4
+low_text =   0.35
 link_threshold =  0.35
 
 add_link = 0

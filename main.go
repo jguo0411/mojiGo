@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"mojiGo/core"
 	"mojiGo/utils/file"
-	"mojiGo/utils/image"
 	. "mojiGo/utils/sys"
 	"strings"
 	"time"
@@ -41,8 +40,6 @@ func main() {
 		fmt.Printf("%s:%s\n", k, v)
 	}
 
-	testC := image.GoSum(34, 5)
-	fmt.Println(testC)
 	_ = detect()
 	return
 }

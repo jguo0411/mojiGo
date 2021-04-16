@@ -41,25 +41,27 @@ func LoadImage(imgFile string) *OrgImage {
 	}
 }
 
-//getRange return image content boundary.
+//getRange return image content boundary.gocv 0.27.0
 func getRange(ref cv.Mat, orgImage *OrgImage) image.Rectangle {
-	refCnts := cv.FindContours(ref, cv.RetrievalExternal, cv.ChainApproxSimple)
+	refCntsPointer := cv.FindContours(ref, cv.RetrievalExternal, cv.ChainApproxSimple)
+	defer refCntsPointer.Close()
+
 	var mRetc image.Rectangle
-	if len(refCnts) < 2 {
+	if refCntsPointer.Size() < 2 {
 		mRetc.Min.X = 0
 		mRetc.Min.Y = 0
 		mRetc.Max.X = orgImage.w
 		mRetc.Max.Y = orgImage.h
 		return mRetc
 	}
-	tmp0 := cv.BoundingRect(refCnts[0])
+	tmp0 := cv.BoundingRect(refCntsPointer.At(0))
 	mRetc.Min.X = tmp0.Min.X
 	mRetc.Min.Y = tmp0.Min.X
 	mRetc.Max.X = tmp0.Max.X
 	mRetc.Max.Y = tmp0.Max.Y
 
-	for i := 1; i < len(refCnts); i++ {
-		tmp := cv.BoundingRect(refCnts[i])
+	for i := 1; i < refCntsPointer.Size(); i++ {
+		tmp := cv.BoundingRect(refCntsPointer.At(i))
 		mRetc.Min.X = int(math.Min(float64(mRetc.Min.X), float64(tmp.Min.X)))
 		mRetc.Min.Y = int(math.Min(float64(mRetc.Min.Y), float64(tmp.Min.Y)))
 		mRetc.Max.X = int(math.Max(float64(mRetc.Max.X), float64(tmp.Max.X)))
@@ -82,6 +84,26 @@ func rangePre(orgImage *OrgImage) cv.Mat {
 	cv.Subtract(tmpMat, ref, &ref)
 
 	return ref
+}
+
+//func NormalizeMeanVariance(img *cv.Mat, mean, variance [3]float32){
+func NormalizeMeanVariance(img *cv.Mat) (dst cv.Mat) {
+
+	//mean := [3]float32{0.485*255, 0.456*255, 0.406*255}
+	//variance := [3]float32{0.229*255, 0.224*255, 0.225*255}
+	mean := [3]float32{123.675, 116.28, 103.53}
+	variance := [3]float32{58.395, 57.12, 57.375}
+
+	dst = cv.NewMat()
+
+	a := cv.Split(*img)
+	for i := 0; i < 3; i++ {
+		// m(x,y)=saturate_cast<rType>(α(∗this)(x,y)+β)
+		a[i].ConvertToWithParams(&a[i], cv.MatTypeCV32FC1, 1.0/variance[i], (0.0-mean[i])/variance[i])
+		//defer a[i].Close()
+	}
+	cv.Merge(a, &dst)
+	return
 }
 
 func CutIntoSmall(orgImg *OrgImage, hyp *file.Hyp) ([]image.Point, []cv.Mat) {
@@ -131,9 +153,14 @@ func CutIntoSmall(orgImg *OrgImage, hyp *file.Hyp) ([]image.Point, []cv.Mat) {
 			offsetXYs = append(offsetXYs, offsetXY)
 
 			cropRLImg := cropBG.Region(cropRectRL)
-			cutImages = append(cutImages, cropRLImg.Clone())
+			//savename := fmt.Sprintf("/home/dac/Desktop/192.168.0.5/%d_%dgo.png", r, l)
+			//cv.IMWrite(savename, cropRLImg)
+			croped := NormalizeMeanVariance(&cropRLImg)
+
+			_ = cropRLImg.Close()
+			cutImages = append(cutImages, croped.Clone())
+			_ = croped.Close()
 		}
 	}
-
 	return offsetXYs, cutImages
 }
